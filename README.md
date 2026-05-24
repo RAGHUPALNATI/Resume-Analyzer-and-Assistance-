@@ -1,4 +1,4 @@
-# SkillMap: AI-Powered Talent Intelligence
+# FitSift: AI-Powered Talent Intelligence
 
 <div align="center">
 
@@ -14,11 +14,11 @@
 
 ---
 
-## 🌟 What is SkillMap?
+## 🌟 What is FitSift?
 
-SkillMap is a full-stack talent intelligence platform designed to help recruiters and hiring managers move past keyword matching. It uses **unsupervised machine learning** to cluster thousands of resumes into distinct skill profiles and **Generative AI (Gemini)** to provide deep, actionable insights into a candidate's readiness for specific roles.
+FitSift is a full-stack talent intelligence platform designed to help recruiters and hiring managers move past keyword matching. It uses **unsupervised machine learning** to cluster thousands of resumes into distinct skill profiles and **Generative AI (Gemini)** to provide deep, actionable insights into a candidate's readiness for specific roles.
 
-Instead of scanning resumes one by one, SkillMap gives you a "bird's-eye view" of your entire candidate pool.
+Instead of scanning resumes one by one, FitSift gives you a "bird's-eye view" of your entire candidate pool.
 
 ---
 
@@ -62,7 +62,7 @@ Instead of scanning resumes one by one, SkillMap gives you a "bird's-eye view" o
 ## 🗺️ Project Structure
 
 ```text
-SkillMap/
+FitSift/
 ├── backend/                # Flask API & ML Logic
 │   ├── app.py              # Main API server
 │   └── requirements.txt    # Python dependencies
@@ -109,6 +109,6 @@ export const GEMINI_API_KEY = "YOUR_KEY_HERE";
 
 ---
 
-## 💡 Why SkillMap?
+## 💡 Why FitSift?
 
-Traditional Applicant Tracking Systems (ATS) often fail because they treat resumes as unstructured text blobs. SkillMap turns the recruiting workflow into a structured **talent map**, allowing teams to review candidates by skill density and similarity rather than manual scanning. It bridges the gap between "Keyword Matching" and "Skill Intelligence."
+Traditional Applicant Tracking Systems (ATS) often fail because they treat resumes as unstructured text blobs. FitSift turns the recruiting workflow into a structured **talent map**, allowing teams to review candidates by skill density and similarity rather than manual scanning. It bridges the gap between "Keyword Matching" and "Skill Intelligence."

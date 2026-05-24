@@ -89,6 +89,7 @@ export default function BulkUploadPage() {
           name: payload[i].name,
           cluster_id: p.cluster_id, 
           cluster_name: p.cluster_name, 
+          predicted_role: p.predicted_role,
           confidence_score: p.confidence_score, 
           top_skills: p.top_skills 
         });
@@ -117,14 +118,14 @@ export default function BulkUploadPage() {
   function exportCsvModeB() {
     if (!modeBResults) return;
     const all = [...modeBResults.matched, ...modeBResults.notMatched];
-    const h = ['Name', 'Cluster', 'Match Score', 'Top Skills', 'Status'];
+    const h = ['Name', 'Predicted Role', 'Cluster', 'Match Score', 'Top Skills', 'Status'];
     const rows = all.map(r => {
       const status = r.matchScore >= 85 ? 'Strong Match' : (r.matchScore >= threshold ? 'Good Match' : 'Below Threshold');
-      return [r.name, r.cluster_name, r.matchScore, (r.top_skills||[]).join(' | '), status];
+      return [r.name, r.predicted_role || 'N/A', r.cluster_name, r.matchScore, (r.top_skills||[]).join(' | '), status];
     });
     const csv = [h,...rows].map((r) => r.map((c) => `"${String(c??'').replaceAll('"','""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-    a.download = 'skillmap-jd-match-results.csv'; a.click();
+    a.download = 'fitsift-jd-match-results.csv'; a.click();
   }
 
   // Shared Analytics Data (Mode A)
@@ -438,12 +439,13 @@ export default function BulkUploadPage() {
 
             <div className="table-shell">
               <table className="results-table">
-                <thead><tr><th>#</th><th>Resume</th><th>Cluster</th><th>Match Score</th><th>Top Skills</th><th>Status</th></tr></thead>
+                <thead><tr><th>#</th><th>Resume</th><th>Predicted Role</th><th>Cluster</th><th>Match Score</th><th>Top Skills</th><th>Status</th></tr></thead>
                 <tbody>
                   {filteredMatched.length > 0 ? filteredMatched.map((r, i) => (
                     <tr key={i}>
                       <td>{i+1}</td>
                       <td><span style={{fontWeight:500}}>{r.name}</span></td>
+                      <td><span style={{fontWeight:600, color:'#166534', background:'#DCFCE7', padding:'2px 8px', borderRadius:'4px', fontSize:'0.8rem'}}>{r.predicted_role || 'N/A'}</span></td>
                       <td><span className="cluster-badge">{r.cluster_name}</span></td>
                       <td>
                         <div className="match-bar-wrap"><div className="match-bar-fill" style={{width:`${r.matchScore}%`}} /></div>
@@ -460,7 +462,7 @@ export default function BulkUploadPage() {
                          </span>
                       </td>
                     </tr>
-                  )) : (<tr><td colSpan="6" className="table-empty">No candidates match your criteria.</td></tr>)}
+                  )) : (<tr><td colSpan="7" className="table-empty">No candidates match your criteria.</td></tr>)}
                 </tbody>
               </table>
             </div>
@@ -473,12 +475,13 @@ export default function BulkUploadPage() {
             {showDidNotMeet && (
               <div className="table-shell" style={{marginTop:'12px'}}>
                 <table className="results-table grey-toned">
-                  <thead><tr><th>#</th><th>Resume</th><th>Cluster</th><th>Match Score</th><th>Top Skills</th><th>Status</th></tr></thead>
+                  <thead><tr><th>#</th><th>Resume</th><th>Predicted Role</th><th>Cluster</th><th>Match Score</th><th>Top Skills</th><th>Status</th></tr></thead>
                   <tbody>
                     {modeBResults.notMatched.map((r, i) => (
                       <tr key={i}>
                         <td>{i+1}</td>
                         <td>{r.name}</td>
+                        <td><span style={{fontWeight:600, color:'#991B1B', background:'#FEE2E2', padding:'2px 8px', borderRadius:'4px', fontSize:'0.8rem'}}>{r.predicted_role || 'N/A'}</span></td>
                         <td><span className="cluster-badge">{r.cluster_name}</span></td>
                         <td>
                           <div className="match-bar-wrap"><div className="match-bar-fill" style={{width:`${r.matchScore}%`}} /></div>

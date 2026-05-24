@@ -145,6 +145,7 @@ export default function ATSEditor() {
     const report = `
 ATS Score: ${results.atsScore}/100 (${results.scoreLabel})
 Reason: ${results.scoreReason}
+Role: ${results.predicted_role || 'N/A'}
 Cluster: ${results.cluster} (${results.clusterConfidence}% confidence)
 
 Sections Found:
@@ -429,6 +430,9 @@ ${results.improvementSuggestions?.map((s, i) => `${i+1}. ${s}`).join('\n')}
                     </div>
                     <p className="text-gray-500 text-sm italic mb-4">"{results.scoreReason}"</p>
                     <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                      {results.predicted_role && (
+                        <span className="bg-green-600 text-white text-xs px-2.5 py-1 rounded font-bold shadow-sm">Predicted Role: {results.predicted_role}</span>
+                      )}
                       <span className="bg-[#E8470A] text-white text-xs px-2 py-1 rounded">Cluster: {results.cluster}</span>
                       <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded border border-gray-200">Confidence: {results.clusterConfidence}%</span>
                     </div>

@@ -120,8 +120,8 @@ export default function AnalyzePage() {
             <motion.div className="cluster-match-card" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <div className="cluster-match-top">
                 <div>
-                  <h3>{result.cluster_name}</h3>
-                  <span className="role">{clusterInfo?.top_skills?.[0] || 'AI ML Data Analyst'}</span>
+                  <h3>{result.predicted_role || result.cluster_name}</h3>
+                  <span className="role" style={{ background: '#FFF3EE', color: '#E8470A', padding: '3px 8px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600 }}>{result.cluster_name}</span>
                 </div>
                 <MatchRing score={confidence} />
               </div>

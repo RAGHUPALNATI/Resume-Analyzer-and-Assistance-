@@ -21,7 +21,7 @@ function ShellNavbar({ onMenuOpen }) {
       <div className="navbar-inner">
         <Link to="/" className="brand">
           <span className="brand-mark"><Database size={16} /></span>
-          <span>SkillMap</span>
+          <span>FitSift</span>
         </Link>
         <nav className="nav-links desktop-only">
           {navItems.map((item) => (

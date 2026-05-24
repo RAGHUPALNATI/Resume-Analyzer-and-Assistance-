@@ -10,6 +10,7 @@ no explanation. Use exactly this structure:
   "scoreReason": "one sentence explaining the score",
   "cluster": "one of exactly these 12 values: Finance & Banking, Healthcare & Law, Engineering & Construction, Culinary & Hospitality, Business & Media, Education & Arts, HR & People Management, Information Technology, Sales & Retail, Design & Fashion, Fitness & Wellness, Accounting & Finance",
   "clusterConfidence": number 0 to 100,
+  "predicted_role": "one specific job role of the resume (e.g. Machine Learning Engineer, Frontend Developer, Data Scientist, Accountant, Chef, Advocate, etc.) based on standard professional roles",
   "sectionsFound": {
     "contactInfo": boolean,
     "summary": boolean,

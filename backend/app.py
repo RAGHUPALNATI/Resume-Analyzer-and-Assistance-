@@ -232,6 +232,129 @@ cluster_name_source = load_pickle(MODEL_DIR / "cluster_names.pkl")
 
 sentence_model = SentenceTransformer(str(bert_model_name))
 
+ROLE_DEFINITIONS = {
+    "Machine Learning Engineer": {
+        "keywords": ["pytorch", "tensorflow", "keras", "scikit-learn", "deep learning", "neural networks", "machine learning", "nlp", "computer vision", "transformers", "llm", "bert", "huggingface", "cnn", "rnn", "xgboost", "mlops"],
+        "description": "specialist in machine learning deep learning neural networks train models deploy ml pipelines tensorflow pytorch pandas artificial intelligence reinforcement learning"
+    },
+    "Data Scientist": {
+        "keywords": ["pandas", "numpy", "matplotlib", "seaborn", "scikit-learn", "sql", "data analysis", "statistical modeling", "a/b testing", "jupyter", "tableau", "predictive modeling", "data science"],
+        "description": "data scientist with expertise in statistical modeling data science quantitative analysis sql python r analytics jupyter predictive models business intelligence"
+    },
+    "Data Engineer": {
+        "keywords": ["spark", "hadoop", "kafka", "etl", "data pipeline", "airflow", "redshift", "snowflake", "bigquery", "data warehouse", "scala", "pyspark", "hive", "dbts"],
+        "description": "data engineer specialized in pipelines databases etl spark kafka airflow sql data warehouse large datasets migrations cloud data architectures"
+    },
+    "Frontend Developer": {
+        "keywords": ["react", "angular", "vue", "javascript", "typescript", "html", "css", "tailwind", "sass", "webpack", "npm", "next.js", "frontend", "ui/ux", "web design", "bootstrap"],
+        "description": "frontend developer web designer user interface react typescript javascript tailwindcss single page applications responsive design responsive css"
+    },
+    "Backend Developer": {
+        "keywords": ["python", "flask", "django", "fastapi", "node.js", "express", "java", "spring boot", "go", "golang", "c++", "c#", "microservices", "rest api", "sql", "postgres", "mongodb", "redis", "graphql"],
+        "description": "backend developer building secure scalable robust server-side applications apis microservices python java node spring databases sql databases architect"
+    },
+    "Fullstack Developer": {
+        "keywords": ["fullstack", "full-stack", "mern", "react", "node.js", "express", "mongodb", "postgres", "next.js", "javascript", "typescript", "frontend", "backend", "web development", "api"],
+        "description": "full-stack developer with end-to-end web application expertise using react node express databases deployment devops integrations"
+    },
+    "DevOps Engineer": {
+        "keywords": ["kubernetes", "docker", "ci/cd", "jenkins", "terraform", "ansible", "aws", "gcp", "azure", "github actions", "linux", "cloud", "prometheus", "grafana", "bash"],
+        "description": "devops engineer automation ci/cd pipeline terraform kubernetes docker cloud computing system administrator containerization monitoring infrastructure"
+    },
+    "Mobile Developer": {
+        "keywords": ["swift", "swiftui", "objective-c", "kotlin", "java", "android", "flutter", "react native", "cocoapods", "xcode", "mobile app", "ios"],
+        "description": "mobile application developer ios android swift kotlin flutter react native store deployment mobile development apps store"
+    },
+    "QA / Test Engineer": {
+        "keywords": ["selenium", "cypress", "jest", "unittest", "pytest", "qa", "testing", "automation", "test cases", "manual testing", "bug reporting", "regression", "playwright"],
+        "description": "qa test automation engineer quality assurance cypress selenium pytest test suites bugs manual testing validation quality analyst"
+    },
+    "Cybersecurity Specialist": {
+        "keywords": ["penetration", "cybersecurity", "security", "firewall", "cryptography", "owasp", "ethical hacking", "siem", "incident response", "network security", "vulnerability"],
+        "description": "cybersecurity analyst security engineering penetration testing firewalls encryption risk assessment vulnerability scan compliance networks"
+    },
+    "Software Engineer": {
+        "keywords": ["software engineering", "computer science", "algorithms", "data structures", "git", "python", "java", "c++", "design patterns", "object-oriented", "linux"],
+        "description": "general software engineer computer science algorithms data structures coding debugging git project development coding engineering"
+    },
+    "Investment Banker / Financial Analyst": {
+        "keywords": ["banking", "investment", "portfolio", "finance", "valuation", "excel", "equity", "financial analysis", "mergers", "acquisitions", "m&a", "modeling"],
+        "description": "investment banking analyst portfolio manager equity valuation financial analysis modeling excel spreadsheets corporate finance"
+    },
+    "Accountant / Auditor": {
+        "keywords": ["accounting", "tax", "ledger", "audit", "cpa", "bookkeeping", "invoice", "balance sheet", "financial statements", "quickbooks", "sap"],
+        "description": "accountant auditor general ledger tax preparation filing balance sheets financial statements reconciliation quickbooks bookkeeping"
+    },
+    "Healthcare Professional / Doctor / Nurse": {
+        "keywords": ["healthcare", "nurse", "doctor", "clinical", "patient", "medical", "hospital", "medicine", "treatment", "diagnosis", "rn"],
+        "description": "healthcare nurse doctor clinic medical staff patients care treatment diagnosis hospital pharmacy clinical practice"
+    },
+    "Attorney / Legal Associate": {
+        "keywords": ["lawyer", "attorney", "legal", "court", "contract", "advocate", "litigation", "compliance", "corporate law", "counsel"],
+        "description": "attorney lawyer legal counsel advocate court litigation contract drafting compliance corporate law regulations"
+    },
+    "Civil / Mechanical Engineer": {
+        "keywords": ["cad", "engineering", "mechanical", "electrical", "civil", "structural", "solidworks", "construction", "project management", "autocad"],
+        "description": "civil structural mechanical engineer drafting designs cad solidworks calculations safety standards construction projects"
+    },
+    "Chef / Culinary Specialist": {
+        "keywords": ["chef", "culinary", "kitchen", "cooking", "recipe", "food", "menu", "restaurant", "catering", "baking", "pastry"],
+        "description": "chef kitchen cooking food preparation menus culinary arts recipes catering restaurant service hospitality"
+    },
+    "Marketing / Product Manager": {
+        "keywords": ["marketing", "seo", "product manager", "strategy", "campaign", "analytics", "branding", "social media", "market research", "content"],
+        "description": "marketing campaign manager product management business analyst branding seo social media strategies market research customer acquisition"
+    },
+    "Teacher / Educator": {
+        "keywords": ["teacher", "educator", "curriculum", "teaching", "student", "classroom", "school", "lesson", "education", "special ed"],
+        "description": "teacher school classroom lesson plans students education teaching curriculum development academic instruction"
+    },
+    "Graphic / UI/UX Designer": {
+        "keywords": ["figma", "photoshop", "illustrator", "design", "ui", "ux", "adobe", "graphic", "branding", "creative", "wireframes", "sketch"],
+        "description": "graphic designer UI UX figma adobe creative suite photoshop illustrator wireframes branding layout typography"
+    },
+    "HR Specialist / Recruiter": {
+        "keywords": ["hr", "recruiter", "talent acquisition", "hiring", "onboarding", "recruitment", "interviews", "employee relations", "benefits"],
+        "description": "human resources HR recruiter talent acquisition talent sourcing hiring interviewing employee relations onboarding benefits"
+    },
+    "Sales Representative / Manager": {
+        "keywords": ["sales", "retail", "customer service", "account management", "lead generation", "cold calling", "negotiation", "crm", "salesforce"],
+        "description": "sales manager retail sales representative customer relations lead generation negotiation deals crm salesforce accounts"
+    },
+    "Fitness Trainer / Coach": {
+        "keywords": ["fitness", "trainer", "workout", "gym", "nutrition", "personal training", "athlete", "coaching", "exercise", "strength"],
+        "description": "fitness trainer coach workout programs personal training gym nutrition exercise planning strength conditioning wellness"
+    }
+}
+
+print("Encoding role definitions on startup...")
+ROLE_EMBEDDINGS = {}
+for role, info in ROLE_DEFINITIONS.items():
+    desc = info["description"]
+    emb = sentence_model.encode([desc], convert_to_numpy=True, show_progress_bar=False)
+    ROLE_EMBEDDINGS[role] = l2_normalize(emb)[0]
+
+def predict_specific_role(resume_text: str, embedding: np.ndarray) -> str:
+    text_lower = resume_text.lower()
+    scores = {}
+    for role, info in ROLE_DEFINITIONS.items():
+        role_emb = ROLE_EMBEDDINGS.get(role)
+        sem_score = float(np.dot(embedding, role_emb)) if role_emb is not None else 0.0
+        keywords = info["keywords"]
+        matches = sum(1 for kw in keywords if re.search(r'\b' + re.escape(kw) + r'\b', text_lower))
+        kw_score = min(matches / 4.0, 1.0)
+        scores[role] = 0.6 * sem_score + 0.4 * kw_score
+    return max(scores, key=scores.get)
+
+def get_predicted_role(resume_text: str) -> str:
+    cleaned = clean_text(resume_text)
+    if not cleaned:
+        return "Software Engineer"
+    embedding = sentence_model.encode([cleaned], convert_to_numpy=True, show_progress_bar=False)
+    embedding = l2_normalize(embedding)[0]
+    return predict_specific_role(cleaned, embedding)
+
+
 resume_df = read_dataframe(RESUME_CSV).copy()
 cluster_df = read_dataframe(CLUSTER_RESULTS_CSV).copy()
 
@@ -350,6 +473,7 @@ def predict() -> tuple[dict[str, Any], int]:
             {
                 "cluster_id": cluster_id,
                 "cluster_name": cluster["name"],
+                "predicted_role": get_predicted_role(resume_text),
                 "confidence_score": round(confidence, 4),
                 "top_skills": build_top_skills(resume_text, cluster_id),
                 "nearest_clusters": [
@@ -517,6 +641,7 @@ def analyze_resume_proxy():
             "scoreReason": f"Excellent representation of {pred_cluster} skills, though further emphasis on quantitative impact is recommended.",
             "cluster": pred_cluster,
             "clusterConfidence": int(confidence * 100),
+            "predicted_role": get_predicted_role(resume_text),
             "sectionsFound": {
                 "contactInfo": True,
                 "summary": any(x in resume_text.lower() for x in ["summary", "objective", "profile"]),
@@ -641,6 +766,7 @@ def bulk_predict() -> tuple[dict[str, Any], int]:
                 "index": index,
                 "cluster_id": cluster_id,
                 "cluster_name": cluster["name"],
+                "predicted_role": get_predicted_role(resume_text),
                 "confidence_score": round(confidence, 4),
                 "top_skills": build_top_skills(resume_text, cluster_id),
             }
